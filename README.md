@@ -6,4 +6,4 @@ To Run The Code:
 3)npm start
 4)open another terminal
 5)cd backend
-6)nodemin server.js
+6)nodemon server.js
