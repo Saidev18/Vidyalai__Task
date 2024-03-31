@@ -3,7 +3,7 @@ Command to install the necessary packages for Frontend :<br/>
 <br/>
   npm install react react-dom react-scripts axios bootstrap @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome<br/>
 <br/>
-Command to install the necessary packages for Backend<br/>
+Command to install the necessary packages for Backend :<br/>
 <br/>
   npm install express multer fs-extra pdf-lib cors<br/>
 <br/>
