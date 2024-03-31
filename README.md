@@ -8,7 +8,10 @@ npm install react react-scripts bootstrap @fortawesome/fontawesome-svg-core @for
 <br/>
 Command to install the necessary packages for Backend :<br/>
 <br/>
-  npm install express multer fs-extra pdf-lib cors<br/>
+```
+npm install express multer fs-extra pdf-lib cors
+```
+<br/>
 <br/>
 
 To Run The Code:<br />
