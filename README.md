@@ -1,6 +1,6 @@
 # Vidyalai__Task
  
-To Run The Code:
+To Run The Code:<br />
 1)open an terminal
 2)cd frontend
 3)npm start
