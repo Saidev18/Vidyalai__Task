@@ -78,7 +78,6 @@ function App() {
             });
 
             if (response.ok) {
-                // Update state with URL of new PDF
                 const { filePath } = await response.json();
                 const newPdfUrl = `http://localhost:5000/api/get-new-pdf?filePath=${encodeURIComponent(filePath)}`;
                 setNewPdfUrl(newPdfUrl);
@@ -95,14 +94,12 @@ function App() {
     return (
         <div className="container mt-5">
             <h1 className="mb-4">PDF Page Extractor</h1>
-            {/* Display uploaded PDF */}
             {selectedFile && (
                 <div className="mb-3">
                     <h2>Uploaded PDF</h2>
                     <iframe src={uploadedPdfUrl} width="800" height="500" title="Uploaded PDF"></iframe>
                 </div>
             )}
-            {/* Input for selecting PDF file */}
             <div className="mb-3">
                 <input
                     type="file"
@@ -111,7 +108,6 @@ function App() {
                     onChange={handleFileChange}
                 />
             </div>
-            {/* Display checkboxes for page selection */}
             {selectedFile && (
                 <div className="mb-3">
                     <h2>Pages:</h2>
@@ -131,13 +127,11 @@ function App() {
                     ))}
                 </div>
             )}
-            {/* Button to create new PDF */}
             {selectedFile && (
                 <button className="btn btn-primary" onClick={handleCreatePDF}>
                     Create PDF
                 </button>
             )}
-            {/* Display the new PDF if available */}
             {newPdfUrl && (
                 <div className="mb-3">
                     <h2>New PDF</h2>
