@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 function App() {
+    // State hooks for managing file selection, pages, and PDF URLs
     const [selectedFile, setSelectedFile] = useState(null);
     const [pages, setPages] = useState([]);
     const [numPages, setNumPages] = useState(0);
     const [uploadedPdfUrl, setUploadedPdfUrl] = useState('');
     const [newPdfUrl, setNewPdfUrl] = useState('');
 
+    // Effect hook to fetch PDF info upon file selection
     useEffect(() => {
         if (selectedFile) {
+            // Fetch PDF info
             const formData = new FormData();
             formData.append('pdf', selectedFile);
 
@@ -18,6 +21,7 @@ function App() {
             })
             .then(response => response.json())
             .then(data => {
+                // Update states with PDF info
                 setNumPages(data.numPages);
                 setPages(Array.from({ length: data.numPages }, () => false));
                 setUploadedPdfUrl(URL.createObjectURL(selectedFile));
@@ -29,6 +33,7 @@ function App() {
         }
     }, [selectedFile]);
 
+    // Function to handle file selection
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type === 'application/pdf') {
@@ -41,6 +46,7 @@ function App() {
         }
     };
 
+    // Function to toggle page selection
     const handlePageChange = (pageNumber) => {
         setPages(prevPages => {
             const updatedPages = [...prevPages];
@@ -49,6 +55,7 @@ function App() {
         });
     };
 
+    // Function to create new PDF with selected pages
     const handleCreatePDF = async () => {
         if (!selectedFile) {
             alert('Please select a PDF file.');
@@ -56,6 +63,7 @@ function App() {
         }
 
         try {
+            // Prepare data for PDF creation
             const formData = new FormData();
             formData.append('pdf', selectedFile);
             formData.append('pages', pages
@@ -63,12 +71,14 @@ function App() {
                 .filter(pageNumber => pageNumber !== null)
                 .join(','));
 
+            // Send request to create PDF
             const response = await fetch('http://localhost:5000/api/create-pdf', {
                 method: 'POST',
                 body: formData,
             });
 
             if (response.ok) {
+                // Update state with URL of new PDF
                 const { filePath } = await response.json();
                 const newPdfUrl = `http://localhost:5000/api/get-new-pdf?filePath=${encodeURIComponent(filePath)}`;
                 setNewPdfUrl(newPdfUrl);
@@ -81,15 +91,18 @@ function App() {
         }
     };
 
+    // Render the UI
     return (
         <div className="container mt-5">
             <h1 className="mb-4">PDF Page Extractor</h1>
+            {/* Display uploaded PDF */}
             {selectedFile && (
                 <div className="mb-3">
                     <h2>Uploaded PDF</h2>
                     <iframe src={uploadedPdfUrl} width="800" height="500" title="Uploaded PDF"></iframe>
                 </div>
             )}
+            {/* Input for selecting PDF file */}
             <div className="mb-3">
                 <input
                     type="file"
@@ -98,6 +111,7 @@ function App() {
                     onChange={handleFileChange}
                 />
             </div>
+            {/* Display checkboxes for page selection */}
             {selectedFile && (
                 <div className="mb-3">
                     <h2>Pages:</h2>
@@ -117,11 +131,13 @@ function App() {
                     ))}
                 </div>
             )}
+            {/* Button to create new PDF */}
             {selectedFile && (
                 <button className="btn btn-primary" onClick={handleCreatePDF}>
                     Create PDF
                 </button>
             )}
+            {/* Display the new PDF if available */}
             {newPdfUrl && (
                 <div className="mb-3">
                     <h2>New PDF</h2>
