@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 function App() {
-    // State hooks for managing file selection, pages, and PDF URLs
+    // State hooks for managing file selection, pages, and PDF URL
     const [selectedFile, setSelectedFile] = useState(null);
     const [pages, setPages] = useState([]);
     const [numPages, setNumPages] = useState(0);
