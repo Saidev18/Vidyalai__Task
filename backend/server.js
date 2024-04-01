@@ -8,17 +8,21 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
+// Enable CORS
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
 
+// Set up multer for file upload
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// Middleware to parse JSON bodies
 app.use(express.json());
 
+// Route to handle PDF file upload
 app.post('/api/upload-pdf', upload.single('pdf'), async (req, res) => {
     try {
         const file = req.file;
@@ -33,6 +37,7 @@ app.post('/api/upload-pdf', upload.single('pdf'), async (req, res) => {
     }
 });
 
+// Route to get information about the uploaded PDF
 app.post('/api/get-pdf-info', upload.single('pdf'), async (req, res) => {
     try {
         const pdfBuffer = req.file.buffer;
@@ -45,6 +50,7 @@ app.post('/api/get-pdf-info', upload.single('pdf'), async (req, res) => {
     }
 });
 
+// Route to create a new PDF with selected pages
 app.post('/api/create-pdf', upload.single('pdf'), async (req, res) => {
     try {
         const { pages } = req.body;
@@ -66,10 +72,10 @@ app.post('/api/create-pdf', upload.single('pdf'), async (req, res) => {
     }
 });
 
+// Route to serve the newly created PDF
 app.get('/api/get-new-pdf', async (req, res) => {
     try {
         const filePath = req.query.filePath;
-        console.log(filePath);
         if (!filePath) {
             throw new Error('File path is missing.');
         }
@@ -79,7 +85,6 @@ app.get('/api/get-new-pdf', async (req, res) => {
         res.status(500).send('Internal Server Error: Unable to retrieve new PDF');
     }
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
