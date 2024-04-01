@@ -33,7 +33,7 @@ Open new terminal
 cd backend
 ```
 ```
-npm install express multer fs-extra pdf-lib cors  
+npm install express nodemon multer fs-extra pdf-lib cors  
 ```
 To start the program :  
 
